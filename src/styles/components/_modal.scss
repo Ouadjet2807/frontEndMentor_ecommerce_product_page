@@ -1,0 +1,86 @@
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .modalBox {
+        position: absolute;
+        z-index: 6;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .close {
+            float: right;
+            cursor: pointer;
+            
+            svg {
+
+                path {
+                    color: $white;
+                    transition: 0.3s ease-in;
+                }
+            }
+
+            &:hover {
+
+                svg {
+                    path {
+                        color: $orange;
+                    }
+                }
+            }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            width: 32.4vw;
+            left: -4%;
+            top: 50%;
+            transform: translateY(-220%);
+
+            .previous, .next {
+                background: #fff;
+                width: 2.6vw;
+                height: 5.5vh;            
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                   
+                &:hover {
+
+                    svg {   
+                        path {
+                            stroke: $orange;
+                        }
+                    }
+                }
+
+                svg {
+                    path {
+                        transition: 0.3s ease-in;
+                    }
+                }
+            }
+        }
+
+        .gallery {
+            margin: 35px 0px;
+        }
+    }
+
+    .overlay {
+        background: #000000a9;
+        width: 100%;
+        height: 100%;
+        z-index: 4;
+        position: relative;
+    
+    }
+}

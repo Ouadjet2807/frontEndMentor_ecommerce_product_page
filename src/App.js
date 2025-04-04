@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navigation from "./components/Navigation";
 import Product from "./components/Product";
 
@@ -8,6 +8,17 @@ function App() {
 
   const [cartModal, setCartModal] = useState(false)
   const [cartContent, setCartContent] = useState([])
+  const [cartTotal, setCartTotal] = useState(null)
+
+  const calculateCartTotal = () => {
+    let total = 0
+    cartContent.forEach(item => {
+      total += item.quantity
+    })
+
+    setCartTotal(total)
+  }
+  
 
   const productList = [
     {
@@ -43,11 +54,16 @@ function App() {
       ]
     } 
   ]
+
+  useEffect(() => {
+    calculateCartTotal()
+  }, [cartContent])
   
+
   return (
     <div className="App">
-      <Navigation setCartModal={setCartModal} cartModal={cartModal} cartContent={cartContent}/>
-      <Product data={productList[0]} cartModal={cartModal} cartContent={cartContent} setCartContent={setCartContent}/>
+      <Navigation setCartModal={setCartModal} cartModal={cartModal} cartContent={cartContent} cartTotal={cartTotal}/>
+      <Product data={productList[0]} cartModal={cartModal} setCartModal={setCartModal} cartContent={cartContent} setCartContent={setCartContent}/>
     </div>
 
     

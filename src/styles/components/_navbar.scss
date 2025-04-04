@@ -1,7 +1,26 @@
+@keyframes navSlideIn {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes navSlideOut {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
 nav {
     display: grid;
     grid-template-columns: 15% 55% 30%;
-    width: 70%;
+    gap: 15px;
+    width: 80%;
     margin: 40px auto 0;
     border-bottom: 3px solid $lightGrayishBlue;
     align-items: start;
@@ -12,7 +31,7 @@ nav {
 
     ul {
         display: flex;
-        gap: 30px;
+        gap: 1vw;
         height: 70px;
         padding: 10px 0 0 0;
 
@@ -47,7 +66,27 @@ nav {
         width: max-content;
         margin: -10px auto;
 
-        .cart {
+        .cartBox {
+            display: flex;
+            position: relative;
+           
+
+            .cartSum {
+                position: absolute;
+                background: $orange;
+                font-size: 9px;
+                color: $white;
+                width: 17px;
+                border-radius: 25px;
+                top: -25%;
+                left: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                justify-items: center;
+                z-index: 6;
+            }
+
             img {
                 transition: 0.3s ease-in;
 
@@ -64,8 +103,7 @@ nav {
                 width: 50px;
                 transition: 0.3s ease-in;
                 border-radius: 50%;
-                border: 0px solid $orange;
-
+                border: 2px solid transparent;
 
                 &:hover {
                     border: 2px solid $orange;
@@ -74,4 +112,86 @@ nav {
         }
     }
 
+}
+
+
+@media screen and (max-width: 375px) {
+    nav {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        align-items: center;
+        grid-template-columns: 5% 55% 30%;
+        position: absolute;
+        background: $white;
+
+        .logo {
+            padding: 0;
+        }
+
+        .mobileNav {
+            position: absolute;
+            height: 100vh;
+            width: 60vw;
+            top: 0;
+            left: 0;
+            background: white;
+            padding: 30px 20px;
+            gap: 40px;
+            z-index: 10;
+
+
+            ul {
+                flex-direction: column;
+                gap: 5vw;
+                z-index: 10;
+
+                li {
+                    text-align: left;
+
+                    a {
+                        color: $darkBlue;
+                        font-weight: 700;
+                    }
+                }
+            }
+
+        }
+        .calc {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            background: hsla(0, 0%, 0%, 0.774);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 8;
+        }
+
+        .close {
+            animation: navSlideOut;
+            animation-duration: 0.2s;
+            animation-fill-mode: forwards
+        }
+        
+        .open {
+            display: flex;
+            flex-direction: column;
+            animation: navSlideIn;
+            animation-duration: 0.2s;
+            animation-fill-mode: forwards
+        }
+
+        .right {
+            gap: 20px;
+
+
+            .account {
+
+                img {
+                    width: 25px;
+                }
+            }
+        }
+    }
 }

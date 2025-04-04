@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ProductGallery from './ProductGallery';
 import GalleryModal from './GalleryModal';
 
-export default function Product({data, cartModal, cartContent, setCartContent}) {
+export default function Product({data, cartModal, setCartModal, cartContent, setCartContent}) {
 
   console.log(data);
     
@@ -14,7 +14,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
  
 
 
-  const deleteProductFormCart = (id) => {
+  const deleteProductFromCart = (id) => {
       let filterFromCart = cartContent.filter(item => item.id !== id)
       setCartContent(filterFromCart)
   }
@@ -35,7 +35,10 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
   const addToCart = () => {
     data.quantity = quantity
 
-    setCartContent(prev => [data, ...prev])
+    const cartData = data
+    cartData.amount = data.reducedPrice * quantity
+
+    setCartContent(prev => [cartData, ...prev])
   } 
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
   }, [data])
 
   console.log(data.reducedPrice * quantity);
-  console.log(currentImage);
+  console.log(cartContent);
   
 
   return (
@@ -64,20 +67,22 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
               setModal={setModal}/> 
         }
         {cartModal &&
-            <div className="cartModal">
+            <div className="cartModal" onMouseEnter={() => setCartModal(true)} onMouseLeave={() => setCartModal(false)}>
+              <div className="modalBox">
                 <div className="entitle">
                  <h4>Cart</h4>
                 </div>
+                <div className='cartContainer'>
                 {cartContent.length > 0 ? 
-                    <>
+                      <>
                         {cartContent.map(item => (
-                            <div className="cartItem">
-                                <img src={data.images[0].thumbnail} alt="" />
+                            <div className='cartItem'>
+                                <img src={item.images[0].thumbnail} alt="" />
                                 <div className="info">
-                                    <p>{data.title}</p>
-                                    <p>${data.reducedPrice.toFixed(2)} x {quantity} <span className='total'>${(data.reducedPrice * quantity).toFixed(2)}</span></p>
+                                    <p className='name'>{item.title}</p>
+                                    <p className='price_and_quantity'>${item.reducedPrice.toFixed(2)} x {quantity} <span className='total'>${item.amount.toFixed(2)}</span></p>
                                 </div>
-                                <div className={`delete ${quantity === 0 ? `notAllowed` : null} `} onClick={() => deleteProductFormCart(item.id)}>
+                                <div className="delete" onClick={() => deleteProductFromCart(item.id)}>
                                     <img src="Assets/images/icon-delete.svg" alt="" />
                                 </div>
                             </div>
@@ -85,13 +90,16 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
                     <button>
                         <a href="/Checkout">Checkout</a>
                     </button>
-                    </>
+                </>
 
-                    :
+:
 
-                    <p>Your cart is empty</p>
-                    
+<p>Your cart is empty.</p>
+                   
+                   
                 }
+                </div>
+              </div>
             </div>
         }
         <ProductGallery 
@@ -103,7 +111,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
         <div className="info">
             <p className="brand">{data.brand}</p>
             <h1 className="title">{data.title}</h1>
-            <div className="description">{data.description}</div>
+            <div className="description"><p>{data.description}</p></div>
             <div className="price">
                 <span className='current_price'>${data.reducedPrice ? data.reducedPrice.toFixed(2) : ""}</span>
                 {data.onSale && 
