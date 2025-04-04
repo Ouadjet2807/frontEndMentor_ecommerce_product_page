@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ProductGallery from './ProductGallery';
+import GalleryModal from './GalleryModal';
 
 export default function Product({data, cartModal, cartContent, setCartContent}) {
 
@@ -8,7 +9,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
 
   const [quantity, setQuantity] = useState(0)
 
-  const [currentImage, setCurrentImage] = useState()
+  const [currentImage, setCurrentImage] = useState(data.images[0])
   const [modal, setModal] = useState(false)
  
 
@@ -39,7 +40,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
 
   useEffect(() => {
     if(data && (data.images.length > 0)) {
-        setCurrentImage(data.images[0].fullSize)
+        setCurrentImage(data.images[0])
     }
 
     if(data.onSale) {
@@ -48,23 +49,19 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
   }, [data])
 
   console.log(data.reducedPrice * quantity);
+  console.log(currentImage);
   
 
   return (
 
       <div className='product'>
         {modal && 
-            <div className="modal">
-                <div className="modalBox">
-                <ProductGallery 
-                    images={data.images} 
-                    currentImage={currentImage} 
-                    setCurrentImage={setCurrentImage} 
-                    modal={modal} 
-                    setModal={setModal}/> 
-                </div>
-                <div className="overlay" onClick={() => setModal(false)}></div>
-            </div>
+            <GalleryModal
+              images={data.images} 
+              currentImage={currentImage} 
+              setCurrentImage={setCurrentImage} 
+              modal={modal} 
+              setModal={setModal}/> 
         }
         {cartModal &&
             <div className="cartModal">
@@ -78,7 +75,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
                                 <img src={data.images[0].thumbnail} alt="" />
                                 <div className="info">
                                     <p>{data.title}</p>
-                                    <p>${data.reducedPrice} x {quantity} <span className='total'>${data.reducedPrice * quantity}</span></p>
+                                    <p>${data.reducedPrice.toFixed(2)} x {quantity} <span className='total'>${(data.reducedPrice * quantity).toFixed(2)}</span></p>
                                 </div>
                                 <div className={`delete ${quantity === 0 ? `notAllowed` : null} `} onClick={() => deleteProductFormCart(item.id)}>
                                     <img src="Assets/images/icon-delete.svg" alt="" />
@@ -104,18 +101,21 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
             modal={modal} 
             setModal={setModal}/>
         <div className="info">
-            <h3 className="brand">{data.brand}</h3>
+            <p className="brand">{data.brand}</p>
             <h1 className="title">{data.title}</h1>
             <div className="description">{data.description}</div>
             <div className="price">
-                <span className='current_price'>${data.reducedPrice}</span>
+                <span className='current_price'>${data.reducedPrice ? data.reducedPrice.toFixed(2) : ""}</span>
                 {data.onSale && 
                 <>
                   <span className="percentage">{data.reductionPercentage}%</span>
-                  <span className="price_before_reduction">${data.price}</span>
+                  <span className="price_before_reduction">${data.price.toFixed(2)}</span>
                 </>
                 }
             </div>
+
+            <div className="buttons">
+
 
             <div className="quantity">
                 <div id="minus" className={`minus ${(quantity === 0 ) ? `min` : null}`} onClick={(e) => handleQuantity(e)}>
@@ -127,6 +127,7 @@ export default function Product({data, cartModal, cartContent, setCartContent}) 
                 </div>
             </div>
             <button className="add_to_cart" onClick={() => addToCart()}><img src="Assets/images/icon-cart.svg"></img> Add to cart</button>
+            </div>
         </div>
     </div>
   )

@@ -21,18 +21,22 @@ function App() {
       stock: 25,
       images: [
         {
+          id: 1,
           fullSize: "Assets/images/image-product-1.jpg",
           thumbnail: "Assets/images/image-product-1-thumbnail.jpg"
         },
         {
+          id: 2,
           fullSize: "Assets/images/image-product-2.jpg",
           thumbnail: "Assets/images/image-product-2-thumbnail.jpg"
         },
         {
+          id: 3,
           fullSize: "Assets/images/image-product-3.jpg",
           thumbnail: "Assets/images/image-product-3-thumbnail.jpg"
         },
         {
+          id: 4,
           fullSize: "Assets/images/image-product-4.jpg",
           thumbnail: "Assets/images/image-product-4-thumbnail.jpg"
         },
