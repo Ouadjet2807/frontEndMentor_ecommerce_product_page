@@ -7,11 +7,11 @@ export default function GalleryModal({images, modal, setModal, currentImage, set
 
     const handlePreviousNext = (e) => {
         let newId
-        console.log(e.target.className);
+      
         if(e.target.className === "previous") {
             if((currentImage.id - 1) > 0) {
                 newId = currentImage.id - 2
-                console.log(newId);
+        
             } else {
                 newId = images.length - 1
             }
@@ -25,8 +25,6 @@ export default function GalleryModal({images, modal, setModal, currentImage, set
             }
         }
         setCurrentImage(images[newId])
-        console.log(newId);
-        
         
       }
 
@@ -37,11 +35,7 @@ export default function GalleryModal({images, modal, setModal, currentImage, set
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-      }, [])
-
-    console.log(images[currentImage.id]);
-    console.log(scrollPosition);
-          
+      }, [])          
 
   return (
     <div className='modal' style={{top: scrollPosition}}>

@@ -3,8 +3,6 @@ import ProductGallery from './ProductGallery';
 import GalleryModal from './GalleryModal';
 
 export default function Product({data, cartModal, setCartModal, cartContent, setCartContent}) {
-
-  console.log(data);
     
 
   const [quantity, setQuantity] = useState(0)
@@ -20,8 +18,6 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
   }
 
   const handleQuantity = (e) => {
-
-    console.log(e);
     
     if(e.target.parentElement.id === "minus" && quantity > 0) {
     
@@ -51,8 +47,6 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
     }
   }, [data])
 
-  console.log(data.reducedPrice * quantity);
-  console.log(cartContent);
   
 
   return (

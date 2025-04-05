@@ -8,7 +8,6 @@ export default function ProductGallery({currentImage, setCurrentImage, images, m
 
   const handlePreviousNext = (e) => {
     let newId
-    console.log(e.target.className);
     if(e.target.className === "previous") {
         if((currentImage.id - 1) > 0) {
             newId = currentImage.id - 2
@@ -26,8 +25,6 @@ export default function ProductGallery({currentImage, setCurrentImage, images, m
         }
     }
     setCurrentImage(images[newId])
-    console.log(newId);
-    
     
   }
 

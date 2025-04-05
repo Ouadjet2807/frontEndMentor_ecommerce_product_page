@@ -6,13 +6,8 @@ export default function Navigation({setCartModal, cartModal, cartTotal}) {
  const {width} = useWindowDimensions();
  const [currentUser, setCurrentUser] = useState(true)
  const [mobileNav, setMobileNav] = useState(false)
- console.log(currentUser);
  
- const nav = ["Collections", "Men", "Women", "About", "Contact"]
-
-  console.log(width);
-  
- 
+ const nav = ["Collections", "Men", "Women", "About", "Contact"]  
  
   return (
     <nav className='navigation'>
