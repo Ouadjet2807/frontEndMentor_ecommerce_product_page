@@ -8,6 +8,7 @@
     .modalBox {
         position: absolute;
         z-index: 6;
+        width: 30vw;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -38,15 +39,15 @@
             display: flex;
             justify-content: space-between;
             position: absolute;
-            width: 32.4vw;
-            left: -4%;
+            width: 33vw;
+            left: -5%;
             top: 50%;
-            transform: translateY(-220%);
+            transform: translateY(-160%);
 
             .previous, .next {
                 background: #fff;
-                width: 2.6vw;
-                height: 5.5vh;            
+                width: 60px;
+                height: 60px;            
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -72,6 +73,7 @@
 
         .gallery {
             margin: 35px 0px;
+            width: 100%;
         }
     }
 

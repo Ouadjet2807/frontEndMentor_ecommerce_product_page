@@ -6,7 +6,7 @@ import Product from "./components/Product";
 
 function App() {
 
-  const [cartModal, setCartModal] = useState(false)
+  const [cartModal, setCartModal] = useState(true)
   const [cartContent, setCartContent] = useState([])
   const [cartTotal, setCartTotal] = useState(null)
 
