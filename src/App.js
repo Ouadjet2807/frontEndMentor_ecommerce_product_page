@@ -9,10 +9,14 @@ function App() {
   const [cartModal, setCartModal] = useState(true)
   const [cartContent, setCartContent] = useState([])
   const [cartTotal, setCartTotal] = useState(null)
+  const [cartButtonPosition, setCartButtonPosition] = useState({
+    top: 0,
+    left: 0,
+  })
 
   const calculateCartTotal = () => {
     let total = 0
-    cartContent.forEach(item => {
+    cartContent.forEach((item, index) => {
       total += item.quantity
     })
 
@@ -33,23 +37,23 @@ function App() {
       images: [
         {
           id: 1,
-          fullSize: "Assets/images/image-product-1.jpg",
-          thumbnail: "Assets/images/image-product-1-thumbnail.jpg"
+          fullSize: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-1.jpg",
+          thumbnail: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-1-thumbnail.jpg"
         },
         {
           id: 2,
-          fullSize: "Assets/images/image-product-2.jpg",
-          thumbnail: "Assets/images/image-product-2-thumbnail.jpg"
+          fullSize: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-2.jpg",
+          thumbnail: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-2-thumbnail.jpg"
         },
         {
           id: 3,
-          fullSize: "Assets/images/image-product-3.jpg",
-          thumbnail: "Assets/images/image-product-3-thumbnail.jpg"
+          fullSize: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-3.jpg",
+          thumbnail: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-3-thumbnail.jpg"
         },
         {
           id: 4,
-          fullSize: "Assets/images/image-product-4.jpg",
-          thumbnail: "Assets/images/image-product-4-thumbnail.jpg"
+          fullSize: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-4.jpg",
+          thumbnail: "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/image-product-4-thumbnail.jpg"
         },
       ]
     } 
@@ -57,13 +61,14 @@ function App() {
 
   useEffect(() => {
     calculateCartTotal()
-  }, [cartContent])
-  
 
+  }, [cartContent])
+
+  
   return (
     <div className="App">
-      <Navigation setCartModal={setCartModal} cartModal={cartModal} cartContent={cartContent} cartTotal={cartTotal}/>
-      <Product data={productList[0]} cartModal={cartModal} setCartModal={setCartModal} cartContent={cartContent} setCartContent={setCartContent}/>
+      <Navigation setCartModal={setCartModal} cartModal={cartModal} cartContent={cartContent} cartTotal={cartTotal} setCartButtonPosition={setCartButtonPosition}/>
+      <Product data={productList[0]} cartModal={cartModal} setCartModal={setCartModal} cartContent={cartContent} setCartContent={setCartContent} cartButtonPosition={cartButtonPosition}/>
     </div>
 
     

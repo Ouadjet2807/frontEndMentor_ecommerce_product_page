@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ProductGallery from './ProductGallery';
 import GalleryModal from './GalleryModal';
+import useWindowDimensions from '../hook/useWindowDimensions';
 
-export default function Product({data, cartModal, setCartModal, cartContent, setCartContent}) {
+export default function Product({data, cartModal, setCartModal, cartContent, setCartContent, cartButtonPosition}) {
     
 
+  const { width } = useWindowDimensions()
   const [quantity, setQuantity] = useState(0)
 
   const [currentImage, setCurrentImage] = useState(data.images[0])
@@ -29,12 +31,29 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
   }
 
   const addToCart = () => {
-    data.quantity = quantity
+      
+      data.quantity = quantity
+      
+      console.log(data);
 
     const cartData = data
-    cartData.amount = data.reducedPrice * quantity
+    cartData.amount = data.reducedPrice * data.quantity
+    if(cartContent.length > 0) {
 
-    setCartContent(prev => [cartData, ...prev])
+        cartContent.forEach(item => {
+            if(item.id === data.id) {
+                item.quantity += data.quantity 
+                item.amount += cartData.amount
+            } else {
+                setCartContent(prev => [cartData, ...prev])
+            }
+        })
+    } else {
+        setCartContent(prev => [cartData, ...prev]);
+    }
+
+    setQuantity(0)
+
   } 
 
   useEffect(() => {
@@ -46,7 +65,6 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
         data.reducedPrice = data.price * data.reductionPercentage / 100 
     }
   }, [data])
-
   
 
   return (
@@ -61,7 +79,7 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
               setModal={setModal}/> 
         }
         {cartModal &&
-            <div className="cartModal" onMouseEnter={() => setCartModal(true)} onMouseLeave={() => setCartModal(false)}>
+            <div className="cartModal" onMouseEnter={() => setCartModal(true)} onMouseLeave={() => setCartModal(false)} style={{top: `${width > 800 ? `${(cartButtonPosition.top / 1.05)}px` : "6%"}`, left: `${width > 800 ? `${(cartButtonPosition.left / 1.2)}px`: "50%"}`}}>
               <div className="modalBox">
                 <div className="entitle">
                  <h4>Cart</h4>
@@ -69,15 +87,15 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
                 <div className='cartContainer'>
                 {cartContent.length > 0 ? 
                       <>
-                        {cartContent.map(item => (
-                            <div className='cartItem'>
-                                <img src={item.images[0].thumbnail} alt="" />
+                        {cartContent.map((item, index) => (
+                            <div className='cartItem' key={`item_${index}`}>
+                                <img src={item.images[0].thumbnail} alt="thumbnail" />
                                 <div className="info">
                                     <p className='name'>{item.title}</p>
-                                    <p className='price_and_quantity'>${item.reducedPrice.toFixed(2)} x {quantity} <span className='total'>${item.amount.toFixed(2)}</span></p>
+                                    <p className='price_and_quantity'>${item.reducedPrice.toFixed(2)} x {item.quantity} <span className='total'>${item.amount.toFixed(2)}</span></p>
                                 </div>
                                 <div className="delete" onClick={() => deleteProductFromCart(item.id)}>
-                                    <img src="Assets/images/icon-delete.svg" alt="" />
+                                    <img src="https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/icon-delete.svg" alt="delete-icon" />
                                 </div>
                             </div>
                         ))}
@@ -86,9 +104,9 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
                     </button>
                 </>
 
-:
+                :
 
-<p>Your cart is empty.</p>
+                <p>Your cart is empty.</p>
                    
                    
                 }
@@ -121,14 +139,14 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
 
             <div className="quantity">
                 <div id="minus" className={`minus ${(quantity === 0 ) ? `min` : null}`} onClick={(e) => handleQuantity(e)}>
-                    <img src="Assets/images/icon-minus.svg" alt=""/>
+                    <img src="https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/icon-minus.svg" alt="minus-icon"/>
                 </div>
                 <span>{quantity}</span>
                 <div id="plus" className={`plus ${(quantity === data.stock) ? `max` : null}`}  onClick={(e) => handleQuantity(e)}>
-                    <img src="Assets/images/icon-plus.svg" alt=""/>
+                    <img src="https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/icon-plus.svg" alt="plus-icon"/>
                 </div>
             </div>
-            <button className="add_to_cart" onClick={() => addToCart()}><img src="Assets/images/icon-cart.svg"></img> Add to cart</button>
+            <button className="add_to_cart" onClick={() => addToCart()}><img src="https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/Assets/images/icon-cart.svg" alt="cart-icon"></img> Add to cart</button>
             </div>
         </div>
     </div>

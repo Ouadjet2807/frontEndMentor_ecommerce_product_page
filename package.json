@@ -2,7 +2,7 @@
   "name": "e-commerce-product-page",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page",
+  "homepage": "https://Ouadjet2807.github.io/frontEndMentor_ecommerce_product_page/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

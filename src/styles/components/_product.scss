@@ -11,9 +11,6 @@
 
     .cartModal {
         position: absolute;
-        margin-top: -23%;
-        left: 66%;
-        transform: translateY(-15%);
         padding: 40px 0;
         z-index: 6;
 
@@ -21,7 +18,7 @@
             background: #fff;
             box-shadow: 0px 15px 53px -16px hsl(220, 14%, 75%);
             height: max-content;
-            width: 24vw;
+            width: 30vw;
             display: flex;
             flex-direction: column;
             border-radius: 10px;
@@ -49,6 +46,10 @@
                 gap: 10px;
                 align-items: center;
                 width: 100%;
+
+                .info {
+                    width: max-content;
+                }
                 
                 img {
                     width: 3.2vw;
@@ -175,7 +176,6 @@
 
     .info {
         width: 35vw;
-        margin-top: 50px;
         height: max-content;
 
         .brand {
@@ -296,7 +296,7 @@
 }
 
 
-@media  screen and (max-width: 375px) {
+@media  screen and (max-width: 800px) {
 
     .product {
         display: flex;
@@ -308,8 +308,7 @@
 
         .cartModal {
             width: 93.4vw;
-            left: 2%;
-            top: 17%;
+            transform: translateX(-50%);
 
             .modalBox {
                 width: 100%;
@@ -419,11 +418,11 @@
             }
 
             .price {
-                grid-template-columns: 30% 39% 42%;
+                grid-template-columns: 14% 39% 42%;
                 width: 100%;
 
                 .current_price {
-                    font-size: 25px;
+                    font-size: 4vw;
                 }
             }
 
