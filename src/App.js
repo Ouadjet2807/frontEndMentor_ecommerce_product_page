@@ -6,23 +6,16 @@ import Product from "./components/Product";
 
 function App() {
 
-  const [cartModal, setCartModal] = useState(true)
+  const [cartModal, setCartModal] = useState(false)
   const [cartContent, setCartContent] = useState([])
-  const [cartTotal, setCartTotal] = useState(null)
+  const [cartTotal, setCartTotal] = useState(0)
   const [cartButtonPosition, setCartButtonPosition] = useState({
     top: 0,
     left: 0,
   })
 
-  const calculateCartTotal = () => {
-    let total = 0
-    cartContent.forEach((item, index) => {
-      total += item.quantity
-    })
 
-    setCartTotal(total)
-  }
-  
+
 
   const productList = [
     {
@@ -59,16 +52,11 @@ function App() {
     } 
   ]
 
-  useEffect(() => {
-    calculateCartTotal()
-
-  }, [cartContent])
-
   
   return (
     <div className="App">
       <Navigation setCartModal={setCartModal} cartModal={cartModal} cartContent={cartContent} cartTotal={cartTotal} setCartButtonPosition={setCartButtonPosition}/>
-      <Product data={productList[0]} cartModal={cartModal} setCartModal={setCartModal} cartContent={cartContent} setCartContent={setCartContent} cartButtonPosition={cartButtonPosition}/>
+      <Product data={productList[0]} cartModal={cartModal} setCartModal={setCartModal} cartContent={cartContent} setCartContent={setCartContent} cartButtonPosition={cartButtonPosition} setCartTotal={setCartTotal}/>
     </div>
 
     

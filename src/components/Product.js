@@ -3,7 +3,7 @@ import ProductGallery from './ProductGallery';
 import GalleryModal from './GalleryModal';
 import useWindowDimensions from '../hook/useWindowDimensions';
 
-export default function Product({data, cartModal, setCartModal, cartContent, setCartContent, cartButtonPosition}) {
+export default function Product({data, cartModal, setCartModal, cartContent, setCartContent, cartButtonPosition, setCartTotal}) {
     
 
   const { width } = useWindowDimensions()
@@ -31,29 +31,40 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
   }
 
   const addToCart = () => {
-      
-      data.quantity = quantity
-      
-      console.log(data);
 
-    const cartData = data
-    cartData.amount = data.reducedPrice * data.quantity
-    if(cartContent.length > 0) {
+     const newItem = {
+    ...data,
+    quantity,
+    amount: data.reducedPrice * quantity,
+  };
 
-        cartContent.forEach(item => {
-            if(item.id === data.id) {
-                item.quantity += data.quantity 
-                item.amount += cartData.amount
-            } else {
-                setCartContent(prev => [cartData, ...prev])
+  setCartContent(prevCart => {
+    const existingItem = prevCart.find(item => item.id === newItem.id);
+
+    let updatedCart;
+    if (existingItem) {
+      updatedCart = prevCart.map(item =>
+        item.id === newItem.id
+          ? {
+              ...item,
+              quantity: item.quantity + newItem.quantity,
+              amount: item.amount + newItem.amount,
             }
-        })
+          : item
+      );
     } else {
-        setCartContent(prev => [cartData, ...prev]);
+      updatedCart = [newItem, ...prevCart];
     }
 
-    setQuantity(0)
 
+    const totalQuantity = updatedCart.reduce((sum, item) => sum + item.quantity, 0);
+    setCartTotal(totalQuantity);
+
+    return updatedCart;
+  });
+
+    setQuantity(0)
+    
   } 
 
   useEffect(() => {
