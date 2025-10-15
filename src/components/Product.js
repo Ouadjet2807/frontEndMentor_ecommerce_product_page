@@ -15,8 +15,22 @@ export default function Product({data, cartModal, setCartModal, cartContent, set
 
 
   const deleteProductFromCart = (id) => {
-      let filterFromCart = cartContent.filter(item => item.id !== id)
-      setCartContent(filterFromCart)
+      setCartContent(() => {
+        let filterFromCart = cartContent.filter(item => item.id !== id)
+
+        if(filterFromCart.length > 0) {
+            const totalQuantity = filterFromCart.reduce((sum, item) => sum + item.quantity, 0);
+            setCartTotal(totalQuantity);
+  
+        } else {
+            setCartTotal(0)
+        }
+        
+
+        return filterFromCart;
+    })
+      
+      
   }
 
   const handleQuantity = (e) => {
